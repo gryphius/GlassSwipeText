@@ -38,6 +38,6 @@
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Tap with both fingers to activate navigation" />
+        android:text="Tap: Add char. Swipe up: backspace. Tap 2 fingers: navigation" />
 
 </LinearLayout>

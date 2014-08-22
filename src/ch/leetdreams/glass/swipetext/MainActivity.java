@@ -12,7 +12,6 @@ import android.os.Bundle;
 import android.view.MotionEvent;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
@@ -58,12 +57,15 @@ public class MainActivity extends Activity {
 		for (int i = 97; i <= 122; i++) {
 			addCharacter("" + (char) i);
 		}
+		addCharacter(" ");
 
 		// 0-9
 		for (int i = 48; i <= 57; i++) {
 			addCharacter("" + (char) i);
 		}
 
+		addCharacter(" ");
+		
 		// special chars
 		for (int i = 33; i <= 47; i++) {
 			addCharacter("" + (char) i);
@@ -99,11 +101,13 @@ public class MainActivity extends Activity {
 				TextView tvCurrent=(TextView)findViewById(R.id.currenttext);
 				
 				if (gesture == Gesture.TAP) {
-					TextView tv=(TextView)findViewById(R.id.currenttext);
-					tv.append(selectedText.getText());
+					//single tap: add selected character
+					tvCurrent.append(selectedText.getText());
 					return true;
+					
 				} else if (gesture == Gesture.TWO_TAP) {
-					// do something on two finger tap
+					// double finger tap: activate navigation
+					
 					String addr=tvCurrent.getText().toString();
 					Intent intent = new Intent(Intent.ACTION_VIEW);
 					intent.setData(Uri.parse("google.navigation:q="+addr));
@@ -112,7 +116,7 @@ public class MainActivity extends Activity {
 				} else if (gesture == Gesture.SWIPE_RIGHT) {
 					// do something on right (forward) swipe
 					return true;
-				} else if (gesture == Gesture.SWIPE_LEFT) {
+				} else if (gesture == Gesture.SWIPE_UP) {
 					// do something on left (backwards) swipe
 					CharSequence content=tvCurrent.getText();
 					if (content.length()==0){
@@ -149,6 +153,10 @@ public class MainActivity extends Activity {
 
 	}
 
+	/**
+	 * get the index of the left most textview which is currently visible
+	 * @return
+	 */
 	public int getFirstVisibleTextIndex() {
 		HorizontalScrollView scroller = (HorizontalScrollView) findViewById(R.id.scrollView1);
 		Rect scrollBounds = new Rect();
